@@ -18,7 +18,7 @@ void qs(int *ar, int size)
   }
   else
   {
-    int pivot = v[size/2];
+    int pivot = ar[size/2];
     int a=0;
     int b= size-1;
 
