@@ -55,4 +55,5 @@ void main()/// read numbers and print the linked list
 		list = add_at_begg(list, item);
 	}
 	
+	print_list(list);
 }
