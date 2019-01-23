@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node
+typedef struct node node;
+
+struct node
 {
-	void *item;
+	int item;
 	node *next;
-}node;
+};
 
 int if_empty(node *head)/// if the list is empty, return the NULL
 {
@@ -27,11 +29,11 @@ node* search(node *head, int item)
 	return NULL;
 }
 
-node* add_at_begg(node *head, int *item)
+node* add_at_begg(node *head, int item)
 {
 	node *new_node = (node*) malloc(sizeof(node));
-	new_node->item = item;/// check void
-	new_node->next = head;/// check void
+	new_node->item = item;// 
+	new_node->next = head;// 
 	return new_node;
 }
 void print_list(node *list)
@@ -43,7 +45,7 @@ void print_list(node *list)
 	}
 }
 
-void main()/// read numbers and print the linked list
+void main()/// set a quantity and print all the list
 {
 	node* list = createLIST();
 	int item;
@@ -54,6 +56,7 @@ void main()/// read numbers and print the linked list
 		scanf("%d", &item);
 		list = add_at_begg(list, item);
 	}
-	
+
 	print_list(list);
+	
 }
