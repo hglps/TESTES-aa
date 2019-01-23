@@ -22,28 +22,19 @@ node* createLIST() // what it said...
 node* remove(node *head, int item)
 {
 	node *previous = NULL;
-	node *current = head;
-	while( (current != NULL) && (current->item != item) )
-	{
-		previous = current;
-		current = current->next;
-	}
-	if(current == NULL) return head;
-	if(previous == NULL) head= current->next;
-	else previous->next = current->next;
+	node *current = search(head, previous, item);
+	
+	if(current == head) head = head->next; /// [start]
+	else if( current!=head && current != NULL) previous->next = current->next; /// [middle , end]
 
 	free(current);
 	return head;
 }
 
-node* search(node *head, int item)
+node* search(node *head,node *previous, int item)
 {
-	while(head != NULL)
-	{
-		if(head->item) return head;
-		head = head->next;
-	}
-	return NULL;
+	if(head == NULL && item== head->item) return head;
+	search(head->next, head, item);
 }
 
 node* add_at_begg(node *head, int item)
