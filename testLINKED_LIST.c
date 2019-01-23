@@ -19,6 +19,23 @@ node* createLIST() // what it said...
 	return NULL;
 }
 
+node* remove(node *head, int item)
+{
+	node *previous = NULL;
+	node *current = head;
+	while( (current != NULL) && (current->item != item) )
+	{
+		previous = current;
+		current = current->next;
+	}
+	if(current == NULL) return head;
+	if(previous == NULL) head= current->next;
+	else previous->next = current->next;
+
+	free(current);
+	return head;
+}
+
 node* search(node *head, int item)
 {
 	while(head != NULL)
