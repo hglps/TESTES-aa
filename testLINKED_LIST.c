@@ -19,7 +19,7 @@ node* createLIST() // what it said...
 	return NULL;
 }
 
-node* remove(node *head, int item)
+node* removeTERM(node *head, int item)
 {
 	node *previous = NULL;
 	node *current = search(head, previous, item);
