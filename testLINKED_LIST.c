@@ -66,5 +66,6 @@ void main()/// set a quantity and print all the list
 	}
 
 	print_list(list);
+	free
 	
 }
