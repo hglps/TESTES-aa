@@ -31,10 +31,13 @@ node* add_general(node *head, int item)
 
 void print_list(node *list)
 { 
-	while(list->item != NULL)
+	while(1)
 	{
-		printf("%d\n", list->item);
+	    printf("%d ",list->item);
 		list = list->previous;
+		
+	    if (list->previous==NULL) break;
+		
 	}
 }
 
@@ -43,12 +46,10 @@ void main()
 	node* list = create_list();
 	int n,i;
 	//scanf("%d", &n);
-	for(i=0;i<5;i++)
+	while(scanf("%d", &n) != EOF)
 	{
-		scanf("%d", &n);
 		list = add_general(list,n);
 	}
-	printf("\n");
 
 	print_list(list);
 
