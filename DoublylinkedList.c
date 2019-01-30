@@ -82,7 +82,7 @@ node* remove_front(node *head, int item) /// remove apenas 1 por vez, mesmo que 
 	
 }
 
-node* remove_back(node *head, int item)
+node* remove_back(node *head, int item)/// parece inutil '-'
 {
 	node *curr = head;
 	while(curr != NULL && curr->item != item) curr = curr->previous;
@@ -96,6 +96,11 @@ node* remove_back(node *head, int item)
 	
 	free(curr);
 	return head;
+	
+}
+
+node* sort(node *head)
+{
 	
 }
 
