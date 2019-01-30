@@ -43,9 +43,9 @@ void sort_item(node *head, int up_or_down)
 		while(aux != NULL)// bbsort
 		{
 			up_or_down ? sort_up(head, aux) : sort_down(head, aux);
-			aux = aux->proximo;
+			aux = aux->next;
 		}
-		head = head->proximo;
+		head = head->next;
 	}
 }
 
@@ -131,36 +131,23 @@ node* remove_back(node *head, int item)/// parece inutil '-'
 	
 }
 
-node* sort(node *head)
-{
-	
-}
-
 void main()
 {
 	node* list = create_list();
 	int n,i=0;
 	node* tail;
-	//scanf("%d", &n);
+	
 	while(scanf("%d", &n) != EOF)
 	{
 		list = add_general(list,n);
 		if (i==0)
 		{   tail=list; i++; }
 	}
-
+    
+    	sort_item(tail, 1); // crescente~~ 0 para decrescente; refazer;
 	print_front(tail);
-	printf("\n");
-	print_back(list);
-	printf("\n");
-	remove_front(tail,2);
-	print_front(tail);
-	printf("\n");
-	remove_back(list, 2);
-	print_back(list);
-	printf("\n");
+	
 
 	free(list);
 	free(tail);
 }
-
