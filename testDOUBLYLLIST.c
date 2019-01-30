@@ -120,13 +120,14 @@ void print_list(node *list)
 void main()
 {
 	node* list = create_list();
-	int n,i;
+	int n,i=0;
 	node* tail;
 	//scanf("%d", &n);
 	while(scanf("%d", &n) != EOF)
 	{
 		list = add_general(list,n);
-		tail=list;
+		if (i==0) tail=list;
+		i++;
 	}
 
 	print_list(tail);
