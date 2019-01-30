@@ -17,6 +17,38 @@ node* create_list()
 	return (blabla);
 }
 
+void sort_up(node *head, node *aux)/// crescente
+{
+	if(head->item > aux->item)
+	{
+		int auxiliar = head->item;
+		head->item = aux->item;
+		aux->item = auxiliar;
+	}
+}
+void sort_down(node *head, node *aux) /// decrescente
+{
+	if(head->item < aux->item)
+	{
+		int auxiliar = head->item;
+		head->item = aux->item;
+		aux->item = auxiliar;
+	}
+}
+void sort_item(node *head, int up_or_down)
+{
+	while(head != NULL)
+	{
+		node *aux = head;
+		while(aux != NULL)// bbsort
+		{
+			up_or_down ? sort_up(head, aux) : sort_down(head, aux);
+			aux = aux->proximo;
+		}
+		head = head->proximo;
+	}
+}
+
 node* add_general(node *head, int item)
 {
 	node* new_node = (node*)malloc(sizeof(node));
