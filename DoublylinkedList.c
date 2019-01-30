@@ -45,6 +45,11 @@ void print_list(node *list)
 	}
 }
 
+node* remove_item(node *list, int item)
+{
+	
+}
+
 void main()
 {
 	node* list = create_list();
