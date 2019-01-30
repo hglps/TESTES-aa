@@ -34,9 +34,13 @@ void print_list(node *list)
 	while(1)
 	{
 	    printf("%d ",list->item);
-		list = list->previous;
+		list = list->next;
 		
-	    if (list->previous==NULL) break;
+	    if (list->next==NULL) 
+	    {
+	        printf("%d ",list->item);
+	        break;
+	    }
 		
 	}
 }
@@ -44,14 +48,19 @@ void print_list(node *list)
 void main()
 {
 	node* list = create_list();
-	int n,i;
+	int n,i=0;
+	node* tail;
 	//scanf("%d", &n);
 	while(scanf("%d", &n) != EOF)
 	{
 		list = add_general(list,n);
+		if (i==0) 
+		{   tail=list; i++; }
 	}
 
-	print_list(list);
+	print_list(tail);
 
 	free(list);
+	free(tail);
 }
+
