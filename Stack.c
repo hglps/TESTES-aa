@@ -8,11 +8,11 @@ struct node
 {
 	int item;
 	node *next;
-} 
+};
 struct stack
 {
 	node *top;
-}
+};
 
 stack* create_stack()
 {
