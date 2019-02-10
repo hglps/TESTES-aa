@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 /// STACK USING LINKED LIST
-#define MAX_SIZE 10;
 typedef struct node node;
 typedef struct stack stack;
 struct node
@@ -53,7 +52,7 @@ int peek(stack *st)
 
 void main()
 {
-	stack *stack = create_stack;
+	stack *stack = create_stack();
 	///stuff
 	///stuff
 	free(stack);
