@@ -6,7 +6,7 @@ typedef struct stack stack;
 
 struct node
 {
-	char item;
+	int item;
 	node *next;
 };
 
@@ -27,7 +27,7 @@ int empty(stack *st)
 	return (st->top == NULL);
 }
 
-void push(stack *st, char item)
+void push(stack *st, int item)
 {
 	node *new_node = (node*) malloc(sizeof(node));
 	new_node->item = item;
@@ -38,14 +38,14 @@ void push(stack *st, char item)
 void pop(stack *st)
 {
     node *update = (node*) malloc (sizeof(node));
-	  update = st->top->next;
-	  st->top->next = NULL;
+    update = st->top->next;
+    st->top->next = NULL;
     st->top = update;
 }
 
-char peek(stack *st)
+int peek(stack *st)
 {
-	if(empty(st)) { /*printf("STACK UNDERFLOW\n");*/ return NULL;}/// rever relação char
+	if(empty(st)) { /*printf("STACK UNDERFLOW\n");*/ return 0;}/// rever relação char
 	return st->top->item;
 }
 
