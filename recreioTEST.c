@@ -24,14 +24,14 @@ pqueue* create_pqueue()
 
 int empty(pqueue* pq)
 {
-  return (pqueue->head == NULL);
+  return (pq->head == NULL);
 }
 
 void enqueue(pqueue *pq, int it, int prior)
 {
   node *new_node = (node*) malloc(sizeof(node));
   new_node->item = it;
-  new_node->priority = p;
+  new_node->priority = prior;
 
   if(empty(pq) || (prior > pq->head->priority)) /// se a atual for maior q a da head
   {
@@ -41,7 +41,7 @@ void enqueue(pqueue *pq, int it, int prior)
   else  /// se for menor.. vai indo pelo next ate achar um ser menor q o atual
   {
     node *curr = pq->head;
-    while(curr->next != NULL) && (curr->next->priority > p))
+    while((curr->next != NULL) && (curr->next->priority > prior))
       curr = curr->next;
 
     new_node->next = curr->next;
@@ -49,40 +49,18 @@ void enqueue(pqueue *pq, int it, int prior)
   }
 }
 
-node* dequeue(pqueue *pq)
+int verify(pqueue *pq, int *a,int index,int quantity,int count)
 {
-  if(empty(pq))
+  if(pq->head == NULL) return count;
+  if(index <= quantity)
   {
-    printf("PQUEUE UNDERFLOW\n"); return NULL;
+    if(a[index] == pq->head->item)
+    {
+      count++;
+    }
   }
-  else
-  {
-    node *node1 = pq->head;
-    pq->head = pq->head->next;
-    node1->next = NULL;
-    return node1;
-  }
+  verify(pq->head->next,a, index+1,quantity,count);
 }
-
-int maximum(pqueue *pq)
-{
-  if(empty(pq))
-  {
-    printf("TA VAZIA JA\n");
-    return -1;
-  }
-  else return pq->head->item;
-}
-
-int print_pqueue(pqueue *pq)
-{
-  while(pqueue->head != NULL)
-  {
-    printf("%d ", pqueue->head->item);
-    pq->head = pq->head->next;
-  }
-}
-
 void main()
 {
   int n,i,quant,j,num;
@@ -91,21 +69,26 @@ void main()
   for(i=0;i<n;i++) /// for geral
   {
     pqueue* queue = create_pqueue();
+    int cont=0;
     scanf("%d", &quant);
     for(j=0;j<quant;j++)
     {
-      scanf("%d", &num)
+      scanf("%d", &num);
       note[j] = num;
       enqueue(queue,num,num);
     }
 
-    //enqueue(queue,num,num);
-    print_pqueue(queue);
 
-    break;
+    for(j=0;j<quant;j++)
+    {
+      if(note[j] == queue->head->item)
+      {
+        cont++;
+      }
+      queue->head = queue->head->next;
+    }
 
-
-
+    printf("%d\n", cont);
     free(queue);
   }/// fim do for geral
 }
