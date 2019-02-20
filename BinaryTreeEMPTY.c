@@ -2,8 +2,10 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-typedef struct btree btree;
 
+int count = 0;
+
+typedef struct btree btree;
 struct btree
 {
     int item;
@@ -30,62 +32,62 @@ btree* create_btree(int it,btree *left,btree *right)
   return new_btree;
 }
 
-btree* form_btree(char *text) /// read between parenthesis //// empty
+btree* form_btree(char *text) /// read between parenthesis
 {
   btree *bt = create_empty();
-  int integer, i=0,index=0;
-  char extractText[40];
+  int integer, i=0;
+  char extractText[100];
 
-  while(text[index] == '(')
-  { index+=1; }
-  if(text[index] == ')')
+  while(text[count] == '(')
+  { count+=1; }
+  if(text[count] == ')')
   {
-    index++;
+    count++;
     return NULL;
   }
   else
   {
-    while(text[index] != '(')
+    while(text[count] != '(')
     {
-      extractText[i++] = text[index];
-      index+=1;
+      extractText[i++] = text[count];
+      count+=1;
     }
     extractText[i] = '\0';
     integer = atoi(extractText);
     bt = create_btree(integer,NULL,NULL);
-    bt->left = form_btree(text[index]);
-    bt->right = form_btree(text[index]);
+    bt->left = form_btree(text);
+    bt->right = form_btree(text);
   }
-  index+=1;
+  count+=1;
   return bt;
 }
 
 ////////////////////// start of print functions
-void print_pre(btree* bt) /// pre order
+void print_pre(btree* bt)
 {
   if(!empty(bt))
   {
-    printf("%d", bt->item);
+    printf("%d ", bt->item);
+    print_pre(bt->left);
+    print_pre(bt->right);
+  }
+}
+void print_in(btree *bt)
+{
+  if(!empty(bt))
+  {
     print_in(bt->left);
+    printf("%d ", bt->item);
     print_in(bt->right);
   }
 }
-void print_in(btree *bt) /// in order
+void print_post(btree *bt)
 {
   if(!empty(bt))
   {
-    print_in(bt->left);
-    printf("%d", bt->item);
-    print_in(bt->right);
-  }
-}
-void print_post(btree *bt) /// post order
-{
-  if(!empty(bt))
-  {
-    print_in(bt->left);
-    print_in(bt->right);
-    printf("%d", bt->item);
+    print_post(bt->left);
+    print_post(bt->right);
+    printf("%d ", bt->item);
   }
 }
 /////////////////////// end of print functions
@@ -93,9 +95,12 @@ void print_post(btree *bt) /// post order
 int search_(btree *bt,int it)
 {
   if(bt->item == it) return 1;
-  if(bt == NULL) return -1;
-  search_(bt->left,it);
-  search_(bt->right,it);
+  else if(bt->left != NULL) search_(bt->left,it);
+  else if(bt->right!=NULL) search_(bt->right,it);
+  return -1;
+  //search_(bt->left,it);
+  //search_(bt->right,it);
+  //printf("%d\n", bt->item);
 }
 
 void main()
@@ -110,6 +115,9 @@ void main()
   tree = form_btree(num);
 
   print_pre(tree);
+  printf("\n");
+  printf("%d", search_(tree,4));
+
   free(tree);
 
 }
