@@ -60,7 +60,7 @@ void print_post(btree *bt) /// post order
 }
 /////////////////////// end of print functions
 
-btree* add_term(btree *bt, int item)
+btree* add_term(btree *bt, int item) ////   BINARY SEARCH TREE     ////
 {
   if(bt == NULL) bt = create_btree(item,NULL,NULL);
   else if(bt->item > item) bt->left = add(bt->left,item);
@@ -69,7 +69,7 @@ btree* add_term(btree *bt, int item)
   return bt;
 }
 
-btree* search_term(btree *bt, int item)
+btree* search_term(btree *bt, int item) ////   BINARY SEARCH TREE     ////
 {
   if((bt == NULL) || (bt->item == item)) return bt;
   else if(bt->item > item) return search_term(bt->left, item);
