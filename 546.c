@@ -133,7 +133,7 @@ void main()
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-int count=0,flag=0;
+int count=0;
 typedef struct btree btree;
 struct btree
 {
@@ -200,7 +200,7 @@ int solve_pre(btree* bt)
     {
       return 1;
     }
-    //return 1;
+    else return 0;
   }
   else return 0;
 }
