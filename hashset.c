@@ -26,7 +26,12 @@ hash* create_hash(int n)
   return new_hash;
 }
 
-void put(hash *hs, int item, int size) /// sem verify
+int has(node *search, int item)
+{
+
+}
+
+int put(hash *hs, int item, int size) /// sem verify
 {
     int key = item % size;
     if(hs->table[key] == NULL)
@@ -35,14 +40,19 @@ void put(hash *hs, int item, int size) /// sem verify
       new_node->item = item;
       new_node->next = NULL;
       hs->table[key] = new_node;
+      return 1;
     }
     else
     {
-      if(has(hs->table[key],))
-      node *new_node = (node*)malloc(sizeof(node));
-      new_node->item = item;
-      new_node->next = hs->table[key];
-      hs->table[key] = new_node;
+      if(has(hs->table[key],item)) return 0;
+      else
+      {
+        node *new_node = (node*)malloc(sizeof(node));
+        new_node->item = item;
+        new_node->next = hs->table[key];
+        hs->table[key] = new_node;
+        return 1;
+      }
     }
 }
 
@@ -50,6 +60,7 @@ void main()
 {
   hash *h_table = create_hash(7);
   int size_hash=7;
+  int i=0;
   float op=0;
   int quant_terms=0;
   int num;
@@ -74,6 +85,8 @@ void main()
     {}
     else if(!strcmp(word,"DEL"))
     {}
+
+    i++;
   } /// end of while
 
 }
