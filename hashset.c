@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#define MAX_SIZE 1000000
+#define MAX_SIZE 100000
 typedef struct node node;
 typedef struct hash hash;
 struct node
@@ -41,15 +41,8 @@ int del(hash *hs, int item, int size, int *cont)
           previous = current;
           current = current->next;
         }
-        if (current == NULL)
-        {
-          return 0;
-        }
-        if (previous == NULL)
-        {
-          find = current->next;
-        }
-
+        if (current == NULL) return 0;
+        if (previous == NULL) find = current->next;
         else
         {
           previous->next = current->next;
@@ -63,8 +56,6 @@ int del(hash *hs, int item, int size, int *cont)
       cont = n;
       return 0;
     }
-
-
 }
 
 int has(node *search, int item, int *count)
@@ -82,6 +73,38 @@ int has(node *search, int item, int *count)
     aux = aux->next;
   }
   return 0;
+}
+
+int prt(hash *hs, int size)
+{
+  int i=0, cont=0,maior=0;
+  node *find;
+  for(i=0;i<size;i++)
+  {
+    find = hs->table[i];
+    while(find != NULL)
+    {
+      cont++;
+      find = find->next;
+    }
+    if(cont >= maior) maior = cont;
+    cont = 0;
+  }
+
+  return maior;
+
+}
+
+int size_node(node *list) /// return size of node
+{
+    node *n = list;
+    int cont=0;
+    while(n!=NULL)
+    {
+        cont++;
+        n = n->next;
+    }
+    return cont;
 }
 
 int put(hash *hs, int item, int size, int *cont)
@@ -117,6 +140,25 @@ int put(hash *hs, int item, int size, int *cont)
     }
 }
 
+hash* rehash(hash *hs, int size)
+{
+    hash *new_hash = create_hash(2*size-1);
+    int i,j,op=0;
+    int new_size = 2*size - 1;
+    for(i=0;i<size;i++)
+    {
+        if(hs->table[i]!= NULL)
+        {
+            for(j=0;j<size_node(hs->table[i]);j++)
+            {
+                put(new_hash,hs->table[i]->item, new_size, &op);
+                hs->table[i] = hs->table[i]->next;
+            }
+        }
+    }
+    return new_hash;
+}
+
 void main()
 {
   hash *h_table = create_hash(7);
@@ -125,7 +167,7 @@ void main()
   float op=0;
   int quant_terms=0;
   int num,h,operations=0;
-  char word[3];
+  char word[4];
   while(scanf("%s", word)!= EOF)
   {
     if(!strcmp(word,"ADD"))
@@ -138,11 +180,10 @@ void main()
       }
       else printf("%d 0 %d\n", i, operations);
       op = (float) quant_terms/size_hash;
-      //printf("QUANT TERMS = %d\n", quant_terms);
       if(op >= 0.75)
       {
-        //rehash(h_table); //// finish
-        printf(" |||TA CHEIA FAZ REHASH||| \n");
+        h_table = rehash(h_table,size_hash);
+        size_hash = 2*(size_hash) - 1;
       }
       operations = 0;
 
@@ -160,15 +201,17 @@ void main()
         scanf("%d\n", &num);
         if(del(h_table,num,size_hash,&operations)) printf("%d 1 %d\n", i, operations);
         else printf("%d 0 %d\n", i, operations);
-        quant_terms-=1;
+        quant_terms--;
         operations = 0;
     }
     else if(!strcmp(word,"PRT"))
     {
       printf("%d %d %d %d\n", i, size_hash, quant_terms, prt(h_table,size_hash));
+      operations = 0;
     }
 
     i++;
   } /// end of while
 
+  free(h_table);
 }
