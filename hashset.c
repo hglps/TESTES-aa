@@ -26,10 +26,14 @@ hash* create_hash(int n)
   return new_hash;
 }
 
-int del(node *find, int item)
+int del(hash *hs, int item, int size, int *cont)
 {
-    if(has( find, item))
+    int key = item % size;
+    int *n = cont;
+    node *find = hs->table[key];
+    if(has( find, item, n))
     {
+        cont = n;
         node *previous = NULL;
         node *current = find;
         while (current != NULL && current->item != item)
@@ -38,7 +42,9 @@ int del(node *find, int item)
           current = current->next;
         }
         if (current == NULL)
+        {
           return 0;
+        }
         if (previous == NULL)
         {
           find = current->next;
@@ -52,7 +58,11 @@ int del(node *find, int item)
         free(current);
         return 1;
     }
-    else return 0;
+    else
+    {
+      cont = n;
+      return 0;
+    }
 
 
 }
@@ -107,18 +117,6 @@ int put(hash *hs, int item, int size, int *cont)
     }
 }
 
-void print_node(node *n)
-{
-    node *aux = n;
-    printf("LISTA==  ");
-    while(n != NULL)
-    {
-        printf("%d ", n->item);
-        n = n->next;
-    }
-    printf("\n");
-}
-
 void main()
 {
   hash *h_table = create_hash(7);
@@ -151,7 +149,11 @@ void main()
     }
     else if(!strcmp(word,"HAS"))
     {
-
+      scanf("%d\n", &num);
+      h = num % size_hash;
+      if(has(h_table->table[h], num, &operations)) printf("%d 1 %d\n", i, operations);
+      else printf("%d 0 %d\n", i, operations);
+      operations = 0;
     }
     else if(!strcmp(word,"DEL"))
     {
@@ -159,6 +161,10 @@ void main()
         if(del(h_table,num,size_hash,&operations)) printf("%d 1 %d\n", i, operations);
         else printf("%d 0 %d\n", i, operations);
         operations = 0;
+    }
+    else if(!strcmp(word,"PRT"))
+    {
+      prt(h_table,size_hash);
     }
 
 
