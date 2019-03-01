@@ -160,13 +160,13 @@ void main()
         scanf("%d\n", &num);
         if(del(h_table,num,size_hash,&operations)) printf("%d 1 %d\n", i, operations);
         else printf("%d 0 %d\n", i, operations);
+        quant_terms-=1;
         operations = 0;
     }
     else if(!strcmp(word,"PRT"))
     {
-      prt(h_table,size_hash);
+      printf("%d %d %d %d\n", i, size_hash, quant_terms, prt(h_table,size_hash));
     }
-
 
     i++;
   } /// end of while
