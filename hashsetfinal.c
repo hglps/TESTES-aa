@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#define MAX_SIZE 100000
+#define MAX_SIZE 200000
 typedef struct node node;
 typedef struct hash hash;
 struct node
@@ -28,10 +28,12 @@ hash* create_hash(int n)
 
 int del(hash *hs, int item, int size, int *cont)
 {
+    int *n = cont;
     int key = item % size;
     node *find = hs->table[key];
-    if(has(find, item, cont))
+    if(has(find, item, n))
     {
+        cont = n;
         node *previous = NULL;
         node *current = find;
         while (current != NULL && current->item != item)
@@ -45,6 +47,7 @@ int del(hash *hs, int item, int size, int *cont)
         free(current);
         return 1;
     }
+    cont = n;
     return 0;
 }
 
@@ -96,6 +99,7 @@ int size_node(node *list) /// return size of node
 
 int put(hash *hs, int item, int size, int *cont)
 {
+    int *n = cont;
     int key = item % size;
     if(hs->table[key] == NULL)
     {
@@ -107,8 +111,9 @@ int put(hash *hs, int item, int size, int *cont)
     }
     else
     {
-      if(!has(hs->table[key], item, cont))
+      if(!has(hs->table[key], item, n))
       {
+        cont = n;
         node *new_node = (node*) malloc(sizeof(node));
         new_node->item = item;
         new_node->next = hs->table[key];
@@ -116,6 +121,7 @@ int put(hash *hs, int item, int size, int *cont)
         return 1;
       }
     }
+    cont = n;
     return 0;
 }
 
@@ -198,17 +204,6 @@ void main()
     operations = 0;
     i++;
   } /// end of while
-//   for (i = 0; i < size_hash; i++)
-//   {
-//     printf("|%d|  ", i);
-//     node *find = h_table->table[i];
-//       while(find!= NULL)
-//       {
-//           printf("%d ", find->item);
-//           find = find->next;
-//       }
-//       printf("\n");
-//   }
 
   free(h_table);
 }
