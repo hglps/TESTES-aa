@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#define MAX_SIZE 200000
+#define MAX_SIZE 250000
 typedef struct node node;
 typedef struct hash hash;
 struct node
@@ -19,7 +19,7 @@ hash* create_hash(int n)
 {
   hash *new_hash = (hash*) malloc(sizeof(hash));
   int i;
-  for(i=0;i<n;i++)
+  for(i=0; i<n; i++)
   {
     new_hash->table[i] = NULL;
   }
@@ -204,6 +204,9 @@ void main()
     operations = 0;
     i++;
   } /// end of while
+  ////////
+  //////////
+ //////////////////////// 
 
   free(h_table);
 }
